@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>限制只能输入数字</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var banNumber = document.getElementById('banNumber'),
+                    clearNonumber = function (tThis) {
+                        var _v = tThis.value;
+                        tThis.value = _v.replace(/\D/g,"")
+                    };
+            banNumber.onfocus = function () {
+                clearNonumber(this);
+            };
+            banNumber.onkeyup = function () {
+                clearNonumber(this);
+            };
+            banNumber.onblur = function () {
+                clearNonumber(this);
+            }
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <input type="number" name="numberHTML5" value="HTML5控制" id="banNumberHTML5"/>
+        <input type="text" name="HTML5只能输入数字" placeholder="pattern控制" pattern=[0-9] id="patternHTML5"/>
+        <input type="text" name="number" placeholder="javascript--只能输入数字" id="banNumber"/><br/>
+        <input type="submit" value="提交"/>
+    </form>
+</body>
+</html>

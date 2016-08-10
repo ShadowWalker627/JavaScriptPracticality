@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>禁止输入</title>
+    <script type="text/javascript">
+        window.onload =function () {
+            var _inhibitingInput = document.getElementById("inhibitingInput");
+//            _inhibitingInput.onfocus = function () {    //法一: 控制失去焦点
+//                _inhibitingInput.blur();
+//            }
+            //法二
+            var noText = function () {
+                _inhibitingInput.value = "";
+            }
+            _inhibitingInput.onkeyup = _inhibitingInput.onblur = noText;
+        }
+    </script>
+</head>
+<body>
+    <div>javascript 控制输入<input type="text" value="禁止输入" id="inhibitingInput"/></div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证用户是否输入</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            //验证是否为空的响应元素
+            var _isContent = document.getElementById("isContent"),
+                    _strs = document.getElementById("strs");
+            _isContent.onclick = function () {
+                if(!_strs.value.replace(/^(\s|\u00A0)+|(\s|\u00A0)$/g, "")){
+                    alert("输入为空!")
+                }else{
+                    alert("输入不为空!")
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>验证是否输入</h2>
+    <input type="text" value="     需要过滤空格" id="strs"/>
+    <input type="button" value="验证是否为空" id="isContent"/>
+</body>
+</html>

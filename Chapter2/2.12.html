@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文本框内容自动滚动</title>
+    <script type="text/javascript">
+        /**
+         * 书中高度初始值在 chrome 不能实现
+         * 火狐中数字1与其他数字所占宽度不同 单纯的文本测试 不同浏览器会存在不同问题
+         * 实际应用中,div 中内容更多的可能是 ul 标签
+         * */
+        window.onload = function () {
+            var rollContent = document.getElementById('rollContent'),
+                _div = rollContent.innerHTML,
+                setCss = function (_this, cssOption) {
+//                    console.log(!_this);
+//                    console.log(_this.nodeType === 3);
+//                    console.log(_this.nodeType === 8);
+//                    console.log(!_this.style);
+                    //检测节点类型
+                    if(!_this || _this.nodeType === 3 || _this.nodeType === 8 || !_this.style){
+                        return;
+                    };
+                    for(var cs in cssOption){
+                        _this.style[cs] = cssOption[cs];
+                    };
+                    return _this;
+                };
+            rollContent.innerHTML = "<div id='rollContent_roll'>" + _div +"</div>";
+            //需要加 px
+            setCss(rollContent, {
+                "position": "relative",
+                "overflow": "hidden",
+                "word-wrap": "break-word",
+                "word-break": "break-all",
+                "width": rollContent.getAttribute("data-rwidth") + "px",
+                "height": rollContent.getAttribute("data-rheight") + "px"
+            });
+            var timeRoll = document.getElementById("rollContent_roll"),
+                _h = timeRoll.offsetHeight,
+                timeoutRoll = function () {     //修改 top 值
+                    var _h = timeRoll.offsetHeight,
+                        _t = parseInt(timeRoll.style.top, 10),
+                        //是否将top 设置为0
+                        _tt = _h > Math.abs(_t) || _t >= 0 ? _t -10 : (_h || 0);
+//                    console.log(_t);
+                    setCss(timeRoll,{
+                        "top": _tt+"px"
+                    });
+                    setTimeout(timeoutRoll, 100);
+                };
+
+            if(_h > rollContent.getAttribute("data-rheight")){  //判断高度是否高于data-rheight
+                console.log("dayu");
+                timeoutRoll();
+                setCss(timeRoll, {
+                    "position": "relative",
+                    "top": "0px"
+                })
+            }
+        }
+    </script>
+</head>
+<body>
+    <h3>文本框内容自动滚动</h3>
+
+    <div id="rollContent" data-rwidth='100' data-rheight="100" class="rollContent">
+        <ul>
+            <li>11111111111</li>
+            <li>22222222222</li>
+            <li>33333333333</li>
+            <li>44444444444</li>
+            <li>55555555555</li>
+            <li>66666666666</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>实时提示可输入字符(区分中英文)</title>
+    <script type="text/javascript" src="strLen.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var forElementArr = function (_elementArr, callBack) {
+                        var arr = _elementArr,
+                                self = this;
+                        if(!(_elementArr instanceof Array)){
+                            arr = [_elementArr];
+                        };
+                        for(var i = 0, arrLen = arr.length; i < arrLen; i++){
+                            var arrI = arr[i];  //获取 id
+                            if(typeof arrI == "string"){
+                                arrI = document.getElementById(arrI);   //根据 id 获取元素对象
+                            };
+                            callBack && callBack(i, arrI);
+                        }
+                    },
+
+                showRemainingCharacters = function (_nums, _remainingCharacters) {
+                    if(_remainingCharacters.search(',') != -1){ //如果在字符串中发现','
+                        _remainingCharacters = _remainingCharacters.split(',');     //得到数组
+                    }
+                    forElementArr(_remainingCharacters, function (_index, _this) {  //回调函数
+                        _this.innerHTML = (_nums && _nums.toString()) || "0";
+                        //将剩余字符数写入span
+                    })
+                },
+
+                remainingCharacters = document.getElementById("remainingCharacters"),
+                clearNonumber = function (tThis) {
+                    var _v = tThis.value,
+                            _vLen = _v.length,
+                            dataLength = tThis.getAttribute("data-length"),
+                            remainingCharacters  = tThis.getAttribute("data-remainingCharacters");//如果有实时显示属性
+                    var dataModel = tThis.getAttribute("data-model");
+                    var subLen = dataLength;
+                    if(dataModel == "Ch"){
+                        _vLen = strLen(_v, dataModel);
+                        var vv = _v.match(/[\u4e00-\u9fa5]/g);
+                        console.log("match 返回值: " + vv);   //字母和数字返回 null, 中文返回数组
+                        subLen = dataLength - (!vv ? 0 : vv.length);
+                    };
+                    if(_vLen > dataLength){
+                        tThis.value = _v.substr(0, subLen);
+                    };
+                    if(remainingCharacters){
+                        //若_vLen 大于 dataLength, 即输入超出设定长度, 则取0;
+                        // 若 vLen 为 0,即未输入, 则得到设定长度 ,否则取 设定长度 减去 输入长度
+                        showRemainingCharacters(!_vLen ? dataLength :(_vLen >
+                        dataLength ? 0 : dataLength - _vLen),remainingCharacters);
+                    }
+                };
+//                console.log(remainingCharacters);
+            remainingCharacters.onfocus = function () {
+                clearNonumber(this);
+            };
+            remainingCharacters.onkeyup = function () {
+                clearNonumber(this);
+            };
+            remainingCharacters.onblur  = function () {
+                clearNonumber(this);
+            }
+        }
+    </script>
+</head>
+<body>
+    <fieldset>
+        <legend>
+            <h4>实时提示可输入字符(区分中英文)</h4>
+        </legend>
+        <!--data-remainingCharacters逗号前后不能有空格-->
+        <input type="text" data-length="5" data-model="Ch"
+               id="remainingCharacters" data-remainingCharacters="charActers1,charActers2" name="remaningCharacters"/>
+        <p>测试1: 还可以输入<span class="remainingCharacters" id="charActers1">5</span>字符</p>
+        <p>测试2: 还可以输入<span class="remainingCharacters" id="charActers2">5</span>字符</p>
+    </fieldset>
+</body>
+</html>

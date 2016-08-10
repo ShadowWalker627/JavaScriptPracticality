@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>限制字符串长度(区分中英文)</title>
+    <script type="text/javascript" src="strLen.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            //获取 input match方法让字符串和一个正则表达式进行匹配
+            remainingCharacters = document.getElementById("remainingCharacters"),
+                clearNonumber = function (tThis) {
+                    var _v = tThis.value,
+                        _vLen = _v.length,
+                        dataLength = tThis.getAttribute("data-length");
+                    var dataModel = tThis.getAttribute("data-model");
+                    var subLen = dataLength;
+                    if(dataModel == "Ch"){
+                        _vLen = strLen(_v, dataModel);
+//                        console.log(_v);
+                        var vv = _v.match(/[\u4e00-\u9fa5]/g);
+                        console.log("match 返回值: " + vv);   //字母和数字返回 null, 中文返回数组
+                        subLen = dataLength - (!vv ? 0 : vv.length);
+                    };
+                    if(_vLen > dataLength){
+                        tThis.value = _v.substr(0, subLen);
+                    };
+                };
+
+            remainingCharacters.onfocus = function () {
+                clearNonumber(this);
+            };
+            remainingCharacters.onkeyup = function () {
+                clearNonumber(this);
+            };
+            remainingCharacters.onblur  = function () {
+                clearNonumber(this);
+            }
+        }
+    </script>
+</head>
+<body>
+    <span>中文占两个字符,数字和英文占一个字符</span><br/>
+    javascript控制字符串长度:<input type="text" data-length="5" data-model="Ch"
+                             id="remainingCharacters" name="remaningCharacters"/>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>限制只能输入中文</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var chineseStr = document.getElementById('chineseStr'),
+                    clearNochinese = function (tThis) {
+                        var _v = tThis.value;
+                        tThis.value = _v.replace(/[^\u4e00-\u9fa5]/g,"");
+                    };
+            chineseStr.onfocus = function () {
+                clearNochinese(this);
+            };
+            chineseStr.onkeyup = function () {
+                clearNochinese(this);
+            };
+            chineseStr.onblur = function () {
+                clearNochinese(this);
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" placeholder="只能输入中文" id="chineseStr"/>
+</body>
+</html>

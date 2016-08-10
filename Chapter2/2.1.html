@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>去除字符串左右两边的空格</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            var _restrsBtn = document.getElementById("rstrsBtn"),
+                    _strs = document.getElementById("strs");
+            _restrsBtn.onclick = function () {
+                _strs.value = _strs.value.replace(/^(\s|\u00A0)+|(\s|\u00A0)+$/g, "")
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>测试去除字符串左右两边的空格</h2>
+    <input type="text" value="     需要过滤空格" id="strs"/>
+    <input type="button" value="过滤" id="rstrsBtn"/>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件文本过滤</title>
+    <script type="text/javascript">
+        //禁止中文输入
+        window.onload = function () {
+            var arr = [
+                    document.getElementById("banInputMethodgoogle"),
+                    document.getElementById("banInputMethod")
+            ],
+                self = this;
+            for(var i = 0, arrLen = arr.length; i < arrLen; i++){
+                var arrI = arr[i];
+                arrI.onfocus = function () {
+                    this.style.imeMode = 'disabled';
+                };
+                var banInputMethod = arrI.getAttribute("banInputMethod");
+                if(banInputMethod){
+                    var clearChinese = function (_this) {
+                        var _v = _this.value;
+                        _this.value = _v.replace(/[\u4e00-\u9fa5]/g,'');
+                    };
+                    arrI.onkeyup = function () {
+                        clearChinese(this);
+                    };
+                    arrI.onblur = function () {
+                        clearChinese(this);
+                    }
+                }
+            };
+
+        }
+    </script>
+</head>
+<body>
+    <input type="text" value="支持主流浏览器" id="banInputMethod" banInputMethod="1"/>
+    <input type="text" value="不支持谷歌浏览器" id="banInputMethodgoogle"/>
+</body>
+</html>

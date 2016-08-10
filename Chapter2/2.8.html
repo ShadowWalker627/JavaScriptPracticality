@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>限制字符串长度</title>
+    <script type="text/javascript">
+        //使用 JavaScript 实现可以兼容所有主流浏览器
+        window.onload = function () {
+            var limitLength = document.getElementById("limitLength"),
+                    clearLimitLength = function (tThis) {
+                        var _v = tThis.value,
+                            _vLen = _v.length,
+                            dataLength = tThis.getAttribute("data-length"),
+                            dataModel = tThis.getAttribute("data-model"),
+                            subLen = dataLength;
+                        if(_vLen > dataLength){
+//                            tThis.blur();
+                            tThis.value = _v.substr(0, subLen);
+                        };
+                    };
+            limitLength.onfocus = function () {
+                clearLimitLength(this);
+            };
+            limitLength.onkeyup = function () {
+                clearLimitLength(this);
+            };
+            limitLength.onblur  = function () {
+                clearLimitLength(this);
+            }
+        }
+    </script>
+</head>
+<body>
+    maxlength 控制字符串长度:<input type="text" maxlength="5"/><br/>
+    javascript控制字符长长度:<input type="text" data-length="5" data-model="Ch" id="limitLength"/>
+</body>
+</html>
