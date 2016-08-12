@@ -6,3 +6,8 @@
   学习书中代码的写法，加油
 1、placeholder 属性为H5新增
 2、原来回调函数的简单写法是：作为函数的参数, 写法callback&&callback(attr1, attr2);
+
+#0812
+第六章：
+Math.ceil: 向上取舍，取大值 \n
+倒计时使用 getTime()获取时间戳，根据时间戳相减得到时间差
