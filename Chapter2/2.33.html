@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>下拉框二级联动</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            //code 表示被绑定的二级菜单标示符
+            var linkDatas = {
+                provinces: [
+                    {
+                        "code": "0",
+                        "name": "请选择"
+                    },
+                    {
+                        "code": "1",
+                        "name": "北京"
+                    },
+                ],
+                citys: {
+                    0: ["请选择"],
+                    1: [
+                            "朝阳区",
+                            "海淀区",
+                            "东城区",
+                            "西城区",
+                            "房山区",
+                            "其他"
+                    ],
+                    2:[
+                            "天津"
+                    ],
+                    3:[
+                        "沧州",
+                        "石家庄",
+                        "秦皇岛",
+                        "其他"
+                    ]
+                }
+            };
+            function addOptions(target, options) {
+                var _option = null,
+                    ol = options.length,
+                    _v = "",
+                    _t = "";
+                for(var i = 0; i < ol; i++){
+                    _v = options[i].value;
+                    _t = options[i].text;
+                    _option = document.createElement("OPTION");
+                    _option.value = _v;
+                    _option.text = _t;
+                    console.log(_option);
+                    target.options.add(_option);
+                }
+            };
+            function linkage(parents, childs) {
+                var _linkDatas = linkDatas,
+                    _parents = _linkDatas.provinces,
+                    _childs = _linkDatas.citys,
+                    _initCity = _childs[0],
+                    _p = [];
+                for(var i in _parents){
+                    _p.push({
+                        "text": _parents[i].name,
+                        "value": _parents[i].code
+                    })
+                }
+                addOptions(parents, _p);
+                addOptions(childs, [{
+                    "value": _initCity,
+                    "text": _initCity
+                }]);
+                parents.onchange = function () {
+                    var __childs = _childs[this.value],
+                        __childsLen = __childs.length,
+                        __p = [];
+                    childs.innerHTML = "";
+                    for(var i = 0; i < __childsLen; i++){
+                        __p.push({
+                            "value": __childs[i],
+                            "text": __childs[i]
+                        })
+                    }
+                    addOptions(childs, __p);
+                }
+            }
+            linkage(
+                    document.getElementById("provinces"),
+                    document.getElementById("citys")
+            )
+        }
+    </script>
+</head>
+<body>
+    省级:<select id="provinces"></select>
+    市级:<select id="citys"></select>
+</body>
+</html>

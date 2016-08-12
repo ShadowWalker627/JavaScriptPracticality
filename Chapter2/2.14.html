@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回车提交表单</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            document.getElementById("enterSubmit").onkeyup = function (e) {
+                var e = e || window.event;
+                var keycode = e.keyCode || e.which || e.charCode;   //获取键码
+                if(keycode === 13){
+                    alert("回车提交成功");
+                }
+            };
+            document.body.onkeyup = function (e) {
+                var e = e || window.event;
+                var keycode = e.keyCode || e.which || e.charCode;   //获取键码
+                if(keycode === 13){
+                    alert("回车提交成功");
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="enterSubmit" value="回车提交"/>
+    <input type="button" value="提交" id="submitBtn"/>
+</body>
+</html>

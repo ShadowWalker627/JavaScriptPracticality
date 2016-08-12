@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>密码强度实时验证</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            function setCss(_this, cssOption) {
+                //检测节点类型
+                if(!_this || _this.nodeType === 3 || _this.nodeType === 8 || !_this.style){
+                    return;
+                };
+                for(var cs in cssOption){
+                    _this.style[cs] = cssOption[cs];
+                };
+                return _this;
+            }
+            function setBlockColor(_this, colorArr) {   //设置颜色块
+                if(typeof colorArr != "string"){
+                    for(var i = 0, arrLen = _this.length; i < arrLen; i++){
+                        _this[i].style["background-color"] = colorArr[i];
+                    }
+                }else {
+                    for(var i = 0, arrLen = _this.length; i < arrLen; i++){
+                        _this[i].style["background-color"] = colorArr;
+                    }
+                }
+
+            }
+            function trim(chars) {      //去除字符串左右两边的空格
+                return (chars || "").replace(/^(s|\u00A0)+|(s|\u00A0)+$/g,"");
+            }
+            function psdStrength(psdStrength, showStrength, strengthBlock) {
+                var selt = this;
+                /*
+                * 字符权重:
+                * 数字1, 字母2, 其他字符为3
+                * 当密码长度小于6时不符合标准
+                * 长度 >= 6 强度小于10, 强度弱
+                * 长度 >= 6, 强度 >= 10, 强度中
+                * 长度 >= 6, 强度 >= 15 , 强
+                * */
+                psdStrength.onkeyup = function () {
+                    var _color = ["red", "yellow", "orange", "green"],
+                        msgs = ["密码太短", "弱", "中", "强"],
+                        _initBlockColor = "white",
+                        _lowerColor = ["red", "white", "white"],
+                        _middleColor = ["orange", "orange", "white"],
+                        _strongColor = ["green", "green", "green"],
+                        _strength = 0,
+                        _v = trim(psdStrength.value),
+                        _vL = _v.length,
+                        i = 0;
+
+                    setBlockColor(strengthBlock, _initBlockColor);
+                    var charStrength = function (char) {
+                        if(char >= 48 && char <= 57){
+                            return 1;
+                        }
+                        if(char >= 97 && char <= 122){
+                            return 2;
+                        }else{
+                            return 3;
+                        }
+                    };
+
+                    if(_vL < 6){        //计算模式
+                        showStrength.innerHTML = msgs[0];
+                        setCss(showStrength, {
+                            "color": _color[0]
+                        });
+                        setBlockColor(strengthBlock, _initBlockColor);
+                    }else{
+                        for(var i = 0; i < _vL; i++){
+                            _strength += charStrength(_v.toLocaleLowerCase().charCodeAt(i));
+                        }
+                        if(_strength < 10){
+                            showStrength.innerHTML = msgs[1];
+                            setCss(showStrength, {
+                                "color": _color[1]
+                            });
+                            setBlockColor(strengthBlock, _lowerColor);
+                        }
+                        if(_strength >= 10 && _strength < 15){
+                            showStrength.innerHTML = msgs[2];
+                            setCss(showStrength, {
+                                "color": _color[2]
+                            });
+                            setBlockColor(strengthBlock, _middleColor);
+                        }
+                        if(_strength >= 15){
+                            showStrength.innerHTML = msgs[3];
+                            setCss(showStrength, {
+                                "color": _color[3]
+                            });
+                            setBlockColor(strengthBlock, _strongColor);
+                        }
+                    }
+                }
+            };
+
+            psdStrength(
+                    document.getElementById("psdStrength"),
+                    document.getElementById("showStrength"),
+                    document.getElementById("ul").children
+            );
+        }
+    </script>
+    <style>
+        .psdStrength{
+            float: left;
+            width: 25px;
+            height: 10px;
+            border: solid 1px darkgray;
+            display: block;
+            margin: 0 2px;
+        }
+    </style>
+</head>
+<body>
+    <fieldset>
+        <legend>密码强度实时验证</legend>
+        <input type="password" id="psdStrength" data-hint="请输入密码"/><br/>
+        <ul id="ul">
+            <li class="psdStrength" id="psdStrength1"></li>
+            <li class="psdStrength" id="psdStrength2"></li>
+            <li class="psdStrength" id="psdStrength3"></li>
+        </ul>
+        <span id="showStrength"></span>
+
+    </fieldset>
+</body>
+</html>

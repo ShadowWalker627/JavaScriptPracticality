@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取日期的指定部分</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            function getRealTime() {
+                var d = new Date();
+                return d.getFullYear() + "年" + (d.getMonth()+1) + "月" +
+                        d.getDate() + "日" +" 周"+d.getDay()+"\n"+ d.getHours() + "时" + d.getMinutes() + "分" +
+                        d.getSeconds() + "秒" + d.getMilliseconds();
+            }
+            setInterval(function(){
+                document.getElementById("clock").innerHTML = getRealTime();
+            }, 100);
+
+            var d = new Date();
+            console.log(d.getFullYear() + "年");
+            console.log((d.getMonth() + 1) + "月");
+            console.log(d.getDate() + "日");
+            console.log("getDay: "+d.getDay());
+            console.log(d.getHours() + "时");
+            console.log(d.getMinutes() + "分");
+            console.log(d.getSeconds() + "秒");
+            console.log("getTime: "+d.getTime());
+            console.log("getMilliseconds: "+d.getMilliseconds());
+            console.log("getTimezonOffset: "+d.getTimezoneOffset());
+            console.log("getUTCDate: "+d.getUTCDate());
+        }
+    </script>
+</head>
+<body>
+    <div id="clock">
+
+    </div>
+</body>
+</html>

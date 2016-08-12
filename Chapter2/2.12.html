@@ -13,10 +13,6 @@
             var rollContent = document.getElementById('rollContent'),
                 _div = rollContent.innerHTML,
                 setCss = function (_this, cssOption) {
-//                    console.log(!_this);
-//                    console.log(_this.nodeType === 3);
-//                    console.log(_this.nodeType === 8);
-//                    console.log(!_this.style);
                     //检测节点类型
                     if(!_this || _this.nodeType === 3 || _this.nodeType === 8 || !_this.style){
                         return;

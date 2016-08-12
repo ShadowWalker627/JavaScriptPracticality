@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获得指定日期是第几周</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            console.log(new Date("2016", "08", "0"));
+            function getMonthDays(Y, M) {
+                return new Date(Y, M , 0).getDate();    //返回指定月份的最后一天
+            }
+
+            function getHowManyWeeks(Y, M, D) {
+                var totalDays = 0;
+
+                for(var i = 1; i < M; i++){
+                    totalDays += getMonthDays(Y, M);
+                }
+
+                totalDays += parseInt(D);       //书中没有用 parseInt 处理
+
+                return Math.ceil(totalDays / 7);        //对数进行向上舍入
+            }
+
+            var inputDay = document.getElementById("inputDay");
+            inputDay.addEventListener("change",function () {
+                var _v = this.value;
+                var day = _v.split("-");
+                document.getElementById("getHowManyWeeks").innerHTML = "第" +
+                        getHowManyWeeks(day[0], day[1], day[2]) + "周";
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <input type="date" id="inputDay"/>
+    <p id="getHowManyWeeks"></p>
+</body>
+</html>

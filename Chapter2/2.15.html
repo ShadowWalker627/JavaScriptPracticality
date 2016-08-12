@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>光标停留在文字最后</title>
+    <script type="text/javascript">
+        /**
+         * IE 支持createTextRange,非IE 使用setSelectionRange
+         * */
+        window.onload = function () {
+            var cursorPos = document.getElementById('cursorPos');
+
+            cursorPos.onclick = cursorPos.onkeyup = function () {
+                var _vLen = this.value.length;
+                if(this.setSelectionRange){
+                    this.setSelectionRange(_vLen, _vLen);
+                }else{
+                    var a = this.createTextRange();
+                    a.moveStart("character", _vLen);
+                    a.collapse(true);
+                    a.select();
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="cursorPos" value="光标永远停留在文字后面"/>
+</body>
+</html>

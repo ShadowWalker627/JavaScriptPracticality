@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取指定日期所在月份的天数</title>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            function getMonthDays(Y, M) {
+                //Y代表年份, M 代表月份0~11, 月份应该加1, 但第三个参数为0, 所以不 +1,
+                // 第三个参数要求最小为1, 为0是指M 月份最后一天
+                return new Date(Y, M , 0).getDate();
+            }
+            document.getElementById("getMonthDays1").innerHTML = "2014 年 1 月: " + getMonthDays("2014", "1") + "天";
+            document.getElementById("getMonthDays2").innerHTML = "2014 年 2 月: " + getMonthDays("2014", "2") + "天";
+            document.getElementById("getMonthDays3").innerHTML = "2014 年 3 月: " + getMonthDays("2014", "3") + "天";
+            document.getElementById("getMonthDays4").innerHTML = "2014 年 4 月: " + getMonthDays("2014", "4") + "天";
+            document.getElementById("getMonthDays5").innerHTML = "2014 年 5 月: " + getMonthDays("2014", "5") + "天";
+            document.getElementById("getMonthDays6").innerHTML = "2014 年 6 月: " + getMonthDays("2014", "6") + "天";
+        }
+    </script>
+</head>
+<body>
+    <p id="getMonthDays1"></p>
+    <p id="getMonthDays2"></p>
+    <p id="getMonthDays3"></p>
+    <p id="getMonthDays4"></p>
+    <p id="getMonthDays5"></p>
+    <p id="getMonthDays6"></p>
+</body>
+</html>

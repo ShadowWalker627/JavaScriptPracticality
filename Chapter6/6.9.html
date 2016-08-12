@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>倒计时</title>
+    <script type="text/javascript">
+        window.onload = function () {
+            function getCountDown(Y, M, D, h, m, s) {
+                Y = Y || 0;
+                M = M || 0;
+                D = D || 0;
+                h = h || 0;
+                m = m || 0;
+                s = s || 0;
+
+                var date = new Date(Y, M-1, D, h, m, s),
+                    times = date.getTime() - new Date().getTime();
+                return Math.ceil(times / (1000 * 60 * 60 * 24));    //返回天数
+            }
+            var inputDay = document.getElementById("inputDay"),
+                countDown = document.getElementById("countDown");
+            inputDay.onchange = function () {
+                var _v = this.value,
+                    day = _v.split("-");
+                countDown.innerHTML = "距离 "+ _v + " 还有 " + getCountDown(day[0], day[1], day[2]) +" 天";
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="date" id="inputDay"/>
+    <p id="countDown"></p>
+</body>
+</html>
